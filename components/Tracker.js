@@ -2,14 +2,13 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
 class Tracker extends React.Component {
-  doTheThings() {
-    console.log('yes')
-  }
-
   render() {
+    const { time, title } = this.props.tracker
+
     return (
       <View style={ styles.container } onClick={ this.doTheThings }>
-        <Text>Something</Text>
+        <Text>{ time }</Text>
+        <Text>{ title }</Text>
       </View>
     )
   }

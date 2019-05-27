@@ -1,21 +1,29 @@
 import React from 'react'
-import { StyleSheet, Text, ScrollView } from 'react-native'
+import Datastore from "react-native-local-mongodb"
+import { Alert, StyleSheet, Text, ScrollView } from 'react-native'
 import TrackerForm from './components/TrackerForm'
 import Tracker from './components/Tracker'
 
 export default class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.db = new Datastore({ filename: "trackly", autoload: true })
+    this.state = { trackers: [] }
+  }
+
+  componentDidMount() {
+    this.db.find({}, (err, docs) => {
+      this.setState({ trackers: docs })
+    })
+  }
+
   render() {
+    const { trackers } = this.state
+
     return (
       <ScrollView style={ styles.container }>
-        <TrackerForm />
-        <Tracker />
-        <Tracker />
-        <Tracker />
-        <Tracker />
-        <Tracker />
-        <Tracker />
-        <Tracker />
-        <Tracker />
+        <TrackerForm db={ this.db }/>
+        { trackers.map((tracker, i) => <Tracker key={ i } tracker={ tracker } />)}
       </ScrollView>
     )
   }

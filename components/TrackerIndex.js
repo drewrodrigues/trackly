@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavigationEvents } from "react-navigation"
 import { Alert, Button, StyleSheet, Text, ScrollView } from 'react-native'
 import store from "../store"
 import TrackerIndexItem from './TrackerIndexItem'
@@ -9,12 +10,24 @@ export default class TrackerIndex extends React.Component {
     this.state = { trackers: [] }
     this.goToNewForm = this.goToNewForm.bind(this)
     this.deleteTracker = this.deleteTracker.bind(this)
+    this.fetchTrackers = this.fetchTrackers.bind(this)
   }
 
   componentDidMount() {
-    store.find({}, (err, docs) => {
-      this.setState({ trackers: docs })
-    })
+    this.fetchTrackers()
+  }
+
+  componentWillUnmount() {
+    console.log('do the things')
+  }
+
+  withNavigationFocus() {
+    console.log('yo')
+  }
+
+  shouldComponentUpdate(nextProps) {
+    console.log('should component update')
+    return true
   }
 
   deleteTracker(id) {
@@ -27,6 +40,12 @@ export default class TrackerIndex extends React.Component {
     })
   }
 
+  fetchTrackers() {
+    store.find({}, (err, docs) => {
+      this.setState({ trackers: docs })
+    })
+  }
+
   goToNewForm() {
     this.props.navigation.navigate("New")
   }
@@ -34,9 +53,13 @@ export default class TrackerIndex extends React.Component {
   render() {
     const { trackers } = this.state
     const { deleteTracker } = this
+    console.log(this.props)
 
     return (
       <ScrollView style={ styles.container }>
+        <NavigationEvents
+          onWillFocus={ this.fetchTrackers }
+        />
         <Button title="New Tracker" onPress={ this.goToNewForm } />
         { trackers.map((tracker, i) => (
           <TrackerIndexItem

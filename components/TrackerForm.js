@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Alert, Button, StyleSheet, TextInput, View } from 'react-native'
-import Datastore from "react-native-local-mongodb"
+import store from '../store'
 
 class TrackerForm extends Component {
   constructor(props) {
@@ -10,7 +10,7 @@ class TrackerForm extends Component {
   }
 
   addTracker() {
-    this.props.db.insert({ title: this.state.text, time: 892 }, (err, doc) => {
+    store.insert({ title: this.state.text, time: 892 }, (err, doc) => {
       if (err) {
         Alert.alert("Failure")
       }

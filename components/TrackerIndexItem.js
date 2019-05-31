@@ -1,12 +1,13 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Button, StyleSheet, Text, View } from 'react-native'
 
 class Tracker extends React.Component {
   render() {
-    const { time, title } = this.props.tracker
+    const { _id, time, title } = this.props.tracker
 
     return (
       <View style={ styles.container }>
+        <Button title="Delete" onPress={ () => this.props.deleteTracker(_id) } />
         <Text>{ time }</Text>
         <Text>{ title }</Text>
       </View>

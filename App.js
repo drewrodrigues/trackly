@@ -2,7 +2,6 @@ import React from 'react'
 import { createStackNavigator, createAppContainer } from "react-navigation"
 import Datastore from "react-native-local-mongodb"
 import { Alert, StyleSheet, Text, ScrollView } from 'react-native'
-import Tracker from './components/Tracker'
 import TrackerIndex from './components/TrackerIndex'
 import TrackerForm from './components/TrackerForm'
 

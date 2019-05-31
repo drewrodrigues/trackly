@@ -1,39 +1,53 @@
 import React from 'react'
+import { createStackNavigator, createAppContainer } from "react-navigation"
 import Datastore from "react-native-local-mongodb"
 import { Alert, StyleSheet, Text, ScrollView } from 'react-native'
-import TrackerForm from './components/TrackerForm'
 import Tracker from './components/Tracker'
+import TrackerIndex from './components/TrackerIndex'
+import TrackerForm from './components/TrackerForm'
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props)
-    this.db = new Datastore({ filename: "trackly", autoload: true })
-    this.state = { trackers: [] }
+const AppNavigator = createStackNavigator(
+  {
+    Home: TrackerIndex,
+    New: TrackerForm
+  },
+  {
+    initialRouteName: "Home"
   }
+)
 
-  componentDidMount() {
-    this.db.find({}, (err, docs) => {
-      this.setState({ trackers: docs })
-    })
-  }
+export default createAppContainer(AppNavigator)
 
-  render() {
-    const { trackers } = this.state
+// export default class App extends React.Component {
+//   constructor(props) {
+//     super(props)
+//     this.db = new Datastore({ filename: "trackly", autoload: true })
+//     this.state = { trackers: [] }
+//   }
 
-    return (
-      <ScrollView style={ styles.container }>
-        <TrackerForm db={ this.db }/>
-        { trackers.map((tracker, i) => <Tracker key={ i } tracker={ tracker } />)}
-      </ScrollView>
-    )
-  }
-}
+//   componentDidMount() {
+//     this.db.find({}, (err, docs) => {
+//       this.setState({ trackers: docs })
+//     })
+//   }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#ccc",
-    paddingTop: 50,
-    paddingLeft: 20,
-    paddingRight: 20
-  }
-})
+//   render() {
+//     const { trackers } = this.state
+
+//     return (
+//       <ScrollView style={ styles.container }>
+//         <TrackerForm db={ this.db }/>
+//         { trackers.map((tracker, i) => <Tracker key={ i } tracker={ tracker } />)}
+//       </ScrollView>
+//     )
+//   }
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     backgroundColor: "#ccc",
+//     paddingTop: 50,
+//     paddingLeft: 20,
+//     paddingRight: 20
+//   }
+// })

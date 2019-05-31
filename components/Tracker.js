@@ -6,7 +6,7 @@ class Tracker extends React.Component {
     const { time, title } = this.props.tracker
 
     return (
-      <View style={ styles.container } onClick={ this.doTheThings }>
+      <View style={ styles.container }>
         <Text>{ time }</Text>
         <Text>{ title }</Text>
       </View>
